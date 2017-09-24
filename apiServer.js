@@ -1,5 +1,7 @@
 var express = require('express');
 var path = require('path');
+var jwt = require('express-jwt');
+var passport = require('passport');
 
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
@@ -12,8 +14,10 @@ var logger = require('morgan');
 
 var app = express();
 
-var Users = require("./models/users.js")
+var User = require("./models/users.js")
+//var User = mongoose.model('User');
 
+var auth = jwt({secret: 'SECRET', userProperty: 'payload'});
 
 // view engine setup
 app.set('view engine', 'jade');
@@ -54,17 +58,53 @@ app.use(session({
   cookie: {maxAge: 1000*60*60*24*2},
   store: new MongoStore({mongooseConnection: db, ttl:2*24*60*60})
 }))
-app.get('/users', function(req, res){
-  console.log("GET USERS")
 
-  Users.find(function(err, users){
+
+app.get('/users', function(req, res){
+  console.log("GET USERS FROM API SERVER")
+
+  User.find(function(err, users){
     if(err){
       throw err;
     }
     res.json(users);
   })
-
 })
+
+
+app.post('/login', function(req, res, next){
+  if(!req.body.username || !req.body.password){
+    return res.status(400).json({message: 'Please fill out all fields'});
+  }
+
+  passport.authenticate('local', function(err, user, info){
+    if(err){ return next(err); }
+    if(user){
+      return res.json({token: user.generateJWT()});
+    } else {
+      return res.status(401).json(info);
+    }
+  })(req, res, next);
+});
+
+app.post('/register', function(req, res, next){
+  console.log("hit here")
+  if(!req.body.username || !req.body.password){
+    return res.status(400).json({message: 'Please fill out all fields'});
+  }
+
+  var user = new User();
+
+  user.username = req.body.username;
+
+  user.setPassword(req.body.password)
+
+  user.save(function (err, user){
+    if(err){ return next(err); }
+    console.log("USER == ", user)
+    return res.json({token: user.generateJWT()})
+  });
+});
 
 
 

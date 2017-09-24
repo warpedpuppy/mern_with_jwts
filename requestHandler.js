@@ -15,7 +15,7 @@ import routes from './src/routes';
 function handleRender(req, res){
   axios.get('http://localhost:3001/users')
     .then(function(response){
-      console.log("THIS IS THE THEN FROM REQUEST HANDLER")
+      //console.log("THIS IS THE THEN FROM REQUEST HANDLER")
         //  var myHtml = JSON.stringify(response.data);
         //  console.log(myHtml)
         // res.render('index', {myHtml});
@@ -26,7 +26,7 @@ function handleRender(req, res){
         const initialState = JSON.stringify(store.getState()).replace(/<\/script/g, '<\\/script').replace(/<!--/g, '<\\!--');
         // STEP-3 IMPLEMENT REACT-ROUTER ON THE SERVER TO INTERCEPT CLIENT REQUESTs AND DEFINE WHAT TO DO WITH THEM
         const context = {};
-        console.log("what does the context look like? ", context.url);
+        //console.log("what does the context look like? ", context.url);
 
         const reactComponent = renderToString(
           <Provider store={store}>
@@ -43,9 +43,9 @@ function handleRender(req, res){
           // we added in RedirectWithStatus
           redirect(context.status, context.url)
         } else {
-          console.log("SO HERE THEN")
-          console.log("reactComponent = ", reactComponent)
-          console.log("initialState = ", initialState)
+          // console.log("SO HERE THEN")
+          // console.log("reactComponent = ", reactComponent)
+          // console.log("initialState = ", initialState)
           //var myHtml = {reactComponent, initialState}
           res.status(200).render('index', {reactComponent, initialState});
 

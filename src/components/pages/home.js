@@ -1,12 +1,33 @@
 "use strict"
 import React from 'react';
 import {Col, Row, Well, FormGroup, Form, Button, ControlLabel, FormControl, Checkbox} from 'react-bootstrap';
-
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {getUsers} from '../../actions/userActions';
 
 
 class Home extends React.Component {
+
+	constructor(){
+			super();
+		}
+
+	componentDidMount(){
+		console.log("HOME CALL FOR GET USERS")
+		this.props.getUsers();
+	}
 	
 	render(){
+
+		const usersList = this.props.users.map(function(usersArr){
+			return (
+
+			<Col xs={12} sm={6} md={4} key={usersArr._id}>
+				<h1>{usersArr.username}</h1>
+			</Col>
+		
+			)
+		});
 		const formInstance = (
 		  <Form horizontal>
 		    <FormGroup controlId="formHorizontalEmail">
@@ -49,11 +70,27 @@ class Home extends React.Component {
 							{formInstance}
 						</Col>
 					</Row>
+					<Row>
+						{usersList}
+					</Row>
 				</div>
 			)
 
 
 	}
 }
+function mapStateToProps(state){
+	console.log("STATE FROM HOME = ", state)
+	return {
+		users:state.usersReducer.users,
+	}
+}
+function mapDispatchToProps(dispatch){
+	return bindActionCreators({
+		getUsers:getUsers}, dispatch);
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
 
-export default Home;
+
+
+

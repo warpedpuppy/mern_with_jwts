@@ -1,10 +1,10 @@
 "use strict"
 
-function usersReducer(state={}, action) {
+function usersReducer(state={users:[]}, action) {
 	switch(action.type){
 		case "GET_USERS":
-			return {...state}
-			break;
+		return {...state, users:[...action.payload]}
+		break;
 	}
 	return state;
 }
