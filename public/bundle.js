@@ -48612,7 +48612,7 @@ var Footer = function (_React$Component) {
 					_react2.default.createElement(
 						"p",
 						{ className: "footerText" },
-						"asdfasdf"
+						"this is the footer"
 					)
 				)
 			);
@@ -48641,6 +48641,8 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactBootstrap = __webpack_require__(404);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -48659,12 +48661,78 @@ var Home = function (_React$Component) {
 	}
 
 	_createClass(Home, [{
-		key: "render",
+		key: 'render',
 		value: function render() {
+			var formInstance = _react2.default.createElement(
+				_reactBootstrap.Form,
+				{ horizontal: true },
+				_react2.default.createElement(
+					_reactBootstrap.FormGroup,
+					{ controlId: 'formHorizontalEmail' },
+					_react2.default.createElement(
+						_reactBootstrap.Col,
+						{ componentClass: _reactBootstrap.ControlLabel, sm: 2 },
+						'User name:'
+					),
+					_react2.default.createElement(
+						_reactBootstrap.Col,
+						{ sm: 10 },
+						_react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', placeholder: 'username' })
+					)
+				),
+				_react2.default.createElement(
+					_reactBootstrap.FormGroup,
+					{ controlId: 'formHorizontalPassword' },
+					_react2.default.createElement(
+						_reactBootstrap.Col,
+						{ componentClass: _reactBootstrap.ControlLabel, sm: 2 },
+						'Password'
+					),
+					_react2.default.createElement(
+						_reactBootstrap.Col,
+						{ sm: 10 },
+						_react2.default.createElement(_reactBootstrap.FormControl, { type: 'password', placeholder: 'Password' })
+					)
+				),
+				_react2.default.createElement(
+					_reactBootstrap.FormGroup,
+					null,
+					_react2.default.createElement(
+						_reactBootstrap.Col,
+						{ smOffset: 2, sm: 10 },
+						_react2.default.createElement(
+							_reactBootstrap.Checkbox,
+							null,
+							'Remember me'
+						)
+					)
+				),
+				_react2.default.createElement(
+					_reactBootstrap.FormGroup,
+					null,
+					_react2.default.createElement(
+						_reactBootstrap.Col,
+						{ smOffset: 2, sm: 10 },
+						_react2.default.createElement(
+							_reactBootstrap.Button,
+							{ type: 'submit' },
+							'Sign in'
+						)
+					)
+				)
+			);
 			return _react2.default.createElement(
-				"div",
+				'div',
 				null,
-				"HOLA"
+				_react2.default.createElement(
+					_reactBootstrap.Row,
+					null,
+					_react2.default.createElement(
+						_reactBootstrap.Col,
+						{ xs: 8, xsOffset: 2, sm: 6, smOffset: 3, md: 6, mdOffset: 3, lg: 6, lgOffset: 3 },
+						formInstance
+					)
+				)
 			);
 		}
 	}]);

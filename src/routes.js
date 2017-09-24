@@ -7,7 +7,7 @@ import {render} from 'react-dom';
 import { Route, Switch} from 'react-router-dom';
 import Menu from './components/menu';
 import Footer from './components/footer';
-import Home from './components/home';
+import Home from './components/pages/home';
 // END REACT- ROUTER
 
 //import Main from './main';
