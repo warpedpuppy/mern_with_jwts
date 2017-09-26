@@ -9,11 +9,21 @@ class Main extends React.Component {
 	render(){
 		return (
 			<div>
-			<Menu />
+			<Menu isAuthenticated={this.props.isAuthenticated} />
 					{this.props.children}
-					<Footer />
+			<Footer />
 			</div>
 			)
 	}
 }
-export default Main;
+
+function mapStateToProps(state) {
+  
+	console.log("MAIN STATE", state)
+  
+  return {
+    isAuthenticated:state.authReducer.isAuthenticated
+  }
+}
+
+export default connect(mapStateToProps)(Main)

@@ -15,12 +15,16 @@ const store = createStore(reducers, middleware);
 
 import Main from "./main.js";
 import Home from "./components/pages/home.js";
+import Login from "./components/pages/login.js";
+import Welcome from "./components/pages/welcome.js";
 
 const Routes = (
 	<Provider store={store}>
-		<Router history={browserHistory}>
+		<Router history={hashHistory}>
 			<Route path="/" component={Main}>
 				<IndexRoute component={Home}/>
+				<Route path="/login" component={Login} />
+				<Route path="/welcome" component={Welcome} />
 			</Route>
 		</Router>
 	</Provider>

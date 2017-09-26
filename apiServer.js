@@ -1,7 +1,9 @@
 var express = require('express');
 var path = require('path');
 var jwt = require('express-jwt');
+var jwt2 = require('jsonwebtoken');
 var passport = require('passport');
+var _ = require('lodash');
 
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
@@ -11,10 +13,10 @@ const MongoStore = require('connect-mongo')(session);
 
 var logger = require('morgan');
 
-
+var User = require("./models/users.js")
+require('./config/passport');
 var app = express();
 
-var User = require("./models/users.js")
 //var User = mongoose.model('User');
 
 var auth = jwt({secret: 'SECRET', userProperty: 'payload'});
@@ -71,8 +73,13 @@ app.get('/users', function(req, res){
   })
 })
 
+let config = require('./config/config');
+function createToken(user) {
+  return jwt2.sign(_.omit(user, 'password'), config.secret, { expiresInMinutes: 60*5 });
+}
 
 app.post('/login', function(req, res, next){
+  console.log("LOGIN API CALL");
   if(!req.body.username || !req.body.password){
     return res.status(400).json({message: 'Please fill out all fields'});
   }
@@ -81,14 +88,19 @@ app.post('/login', function(req, res, next){
     if(err){ return next(err); }
     if(user){
       return res.json({token: user.generateJWT()});
+
     } else {
       return res.status(401).json(info);
     }
   })(req, res, next);
 });
 
+
+
+
+
 app.post('/register', function(req, res, next){
-  console.log("hit here")
+  
   if(!req.body.username || !req.body.password){
     return res.status(400).json({message: 'Please fill out all fields'});
   }
@@ -100,9 +112,9 @@ app.post('/register', function(req, res, next){
   user.setPassword(req.body.password)
 
   user.save(function (err, user){
-    if(err){ return next(err); }
-    console.log("USER == ", user)
-    return res.json({token: user.generateJWT()})
+    if(err){return next(err); }
+
+    return res.json({username:user.username, token: user.generateJWT()})
   });
 });
 

@@ -3,40 +3,37 @@ import React from 'react';
 import {Col, Row, Well, FormGroup, Form, Button, ControlLabel, FormControl, Checkbox} from 'react-bootstrap';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {getUsers, registerUsers} from '../../actions/userActions';
+import {getUsers, loginUser} from '../../actions/userActions';
 import {findDOMNode} from 'react-dom';
 
-class Home extends React.Component {
+class Login extends React.Component {
 
-	constructor(){
-			super();
-		}
+	
 
 	componentDidMount(){
-		console.log("HOME CALL FOR GET USERS")
 		this.props.getUsers();
 	}
-	register(){
+	login(){
 			const user={
 				username:findDOMNode(this.refs.username).value, 
 				password:findDOMNode(this.refs.password).value
 			};
 			console.log("USER + ", user)
-			this.props.registerUsers(user);
+			this.props.loginUser(user);
 		}
-
 	render(){
 
-		
 		const usersList = this.props.users.map(function(usersArr){
 			return (
-				<div key={usersArr._id}>username: {usersArr.username}</div>
+
+				<div key={usersArr._id}>{usersArr.username}</div>
+		
 			)
 		});
 		const formInstance = (
 		  <Form horizontal>
-		  <h1>register</h1>
-		    <FormGroup controlId="formHorizontalEmail" >
+		  <h1>Log in</h1>
+		    <FormGroup controlId="formHorizontalEmail">
 		      <Col componentClass={ControlLabel} sm={2}>
 		        User name:
 		      </Col>
@@ -45,7 +42,7 @@ class Home extends React.Component {
 		      </Col>
 		    </FormGroup>
 
-		    <FormGroup controlId="formHorizontalPassword" >
+		    <FormGroup controlId="formHorizontalPassword">
 		      <Col componentClass={ControlLabel} sm={2}>
 		        Password
 		      </Col>
@@ -62,7 +59,7 @@ class Home extends React.Component {
 
 		    <FormGroup>
 		      <Col smOffset={2} sm={10}>
-		        <Button onClick={this.register.bind(this)}>
+		        <Button onClick={this.login.bind(this)}>
 		          Sign in
 		        </Button>
 		      </Col>
@@ -77,10 +74,10 @@ class Home extends React.Component {
 						</Col>
 					</Row>
 					<Row>
-					<Col xs={8} xsOffset={2} sm={6} smOffset={3} md={6} mdOffset={3} lg={6} lgOffset={3}>
-					<Well>
-						{usersList}
-						</Well>
+						<Col xs={8} xsOffset={2} sm={6} smOffset={3} md={6} mdOffset={3} lg={6} lgOffset={3}>
+						<Well>
+							{usersList}
+							</Well>
 						</Col>
 					</Row>
 				</div>
@@ -90,16 +87,15 @@ class Home extends React.Component {
 	}
 }
 function mapStateToProps(state){
-	console.log("STATE FROM HOME = ", state)
 	return {
 		users:state.usersReducer.users,
 	}
 }
 function mapDispatchToProps(dispatch){
 	return bindActionCreators({
-		getUsers:getUsers, registerUsers:registerUsers}, dispatch);
+		getUsers:getUsers, loginUser:loginUser}, dispatch);
 }
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
 
 
 

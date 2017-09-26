@@ -1,18 +1,28 @@
 
 "use strict";
 import React from 'react';
-import {Nav, NavItem, Navbar, Badge, LinkContainer} from 'react-bootstrap'
-
+import {Nav, NavItem, Navbar, Badge, LinkContainer, Button} from 'react-bootstrap'
+import {connect} from 'react-redux';
 
 class Menu extends React.Component{
 
 
+	componentDidMount(){
+		console.log("MENU", this.props.isAuthenticated)
+		
+	}
+
 	render(){
+
+		const { isAuthenticated } = this.props
+		const buttonString = <Button bsStyle="danger">LOG OUT</Button>;
+    	const button = (isAuthenticated)?buttonString:"";
 		return(
 				<Navbar inverse >
 				    <Navbar.Header>
 				      <Navbar.Brand>
 				        <a href="/">user database</a>&nbsp; | &nbsp;
+						
 						
 
 				      </Navbar.Brand>
@@ -21,9 +31,9 @@ class Menu extends React.Component{
 				    <Navbar.Collapse>
 				      <Nav>
 				     
-				        <NavItem eventKey={1} href="/about">about</NavItem>
+				        <NavItem eventKey={1} href="/#/login">log in</NavItem>
 				
-				        <NavItem eventKey={2} href="/contact">contact</NavItem>
+				        <NavItem eventKey={2} href="/#/welcome">welcome</NavItem>
 				       
 				      </Nav>
 				      <Nav pullRight>
@@ -34,7 +44,7 @@ class Menu extends React.Component{
 				        	(<Badge className="badge">{this.props.cartItemsNumber}</Badge>):
 				        		('')	}
 				        		</NavItem>
-				      	
+				      	{button}
 				      </Nav>
 				    </Navbar.Collapse>
 				  </Navbar>
@@ -43,4 +53,6 @@ class Menu extends React.Component{
  
 
 }
+
+
 export default Menu;
