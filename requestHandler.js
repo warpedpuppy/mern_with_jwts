@@ -47,7 +47,7 @@ function handleRender(req, res){
           // console.log("SO HERE THEN")
           // console.log("reactComponent = ", reactComponent)
           // console.log("initialState = ", initialState)
-          //var myHtml = {reactComponent, initialState}
+          
           res.status(200).render('index', {reactComponent, initialState});
 
         }

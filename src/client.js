@@ -14,10 +14,10 @@ const middleware = applyMiddleware(thunk,logger);
 const initialState = window.INITIAL_STATE;
 const store = createStore(reducers,initialState, middleware);
 
-import Main from "./main.js";
-import Home from "./components/pages/home.js";
-import Login from "./components/pages/login.js";
-import Welcome from "./components/pages/welcome.js";
+//import Main from "./main.js";
+// import Home from "./components/pages/home.js";
+// import Login from "./components/pages/login.js";
+// import Welcome from "./components/pages/welcome.js";
 
 import routes from './routes'
 

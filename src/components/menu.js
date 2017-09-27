@@ -3,16 +3,15 @@
 import React from 'react';
 import {Nav, NavItem, Navbar, Badge, LinkContainer, Button} from 'react-bootstrap'
 import {connect} from 'react-redux';
-import {logout} from "../actions/authActions"
+import {logout, checkForLocalStorage} from "../actions/authActions"
 import {bindActionCreators} from 'redux';
 
 class Menu extends React.Component{
 
 
-	// componentDidMount(){
-	// 	console.log("MENU", this.props.isAuthenticated)
-		
-	// }
+	componentDidMount(){
+		this.props.checkForLocalStorage();
+	}
 	logout(){
 			
 			this.props.logout();
@@ -21,7 +20,10 @@ class Menu extends React.Component{
 
 		const { isAuthenticated } = this.props
 		const buttonString = <Button bsStyle="danger" onClick={this.logout.bind(this)}>LOG OUT</Button>;
-    	const button = (isAuthenticated)?buttonString:"";
+
+    	const button = (this.props.isAuthenticated)?buttonString:"";
+    	const welcomeString = (this.props.currentMember !== "")?<span>Welcome, {this.props.currentMember}</span>:"";
+
 		return(
 				<Navbar inverse >
 				    <Navbar.Header>
@@ -42,13 +44,8 @@ class Menu extends React.Component{
 				       
 				      </Nav>
 				      <Nav pullRight>
-				        <NavItem eventKey={1} href="/admin">Admin</NavItem>
-				        <NavItem eventKey={2} href="/cart">Your Cart 
-				        
-				        { (this.props.cartItemsNumber > 0)?
-				        	(<Badge className="badge">{this.props.cartItemsNumber}</Badge>):
-				        		('')	}
-				        		</NavItem>
+				      
+		        		{welcomeString}
 				      	{button}
 				      </Nav>
 				    </Navbar.Collapse>
@@ -58,9 +55,20 @@ class Menu extends React.Component{
  
 
 }
-
+function mapStateToProps(state){
+	//console.log("state from menu ", state)
+	return {
+		isAuthenticated:state.authReducer.isAuthenticated,
+		currentMember:state.authReducer.currentMember
+	}
+}
 function mapDispatchToProps(dispatch){
 	return bindActionCreators({
-		logout:logout}, dispatch);
+		logout:logout, checkForLocalStorage:checkForLocalStorage}, dispatch);
 }
-export default connect(null, mapDispatchToProps)(Menu);
+export default connect(mapStateToProps, mapDispatchToProps)(Menu);
+
+
+
+
+

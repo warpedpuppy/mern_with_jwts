@@ -108,12 +108,13 @@ app.post('/register', function(req, res, next){
   var user = new User();
 
   user.username = req.body.username;
+  console.log("FROM WITHIN API SERVER = ", user.username)
 
   user.setPassword(req.body.password)
 
   user.save(function (err, user){
     if(err){return next(err); }
-
+     console.log("FROM WITHIN API SERVER = ", {username:user.username, token: user.generateJWT()})
     return res.json({username:user.username, token: user.generateJWT()})
   });
 });

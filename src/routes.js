@@ -12,7 +12,7 @@ import Login from './components/pages/login';
 import Welcome from './components/pages/welcome';
 // END REACT- ROUTER
 
-import Main from './main';
+//import Main from './main';
 
 // RETRIVES COMPONENTS BASED ON STATUS
 const Status = function ({ code, children }){
@@ -38,12 +38,14 @@ const NotFound = function(){
 // CLIENT-SERVER SHARED ROUTES
 const routes = (
       <div>
+      <Menu />
           <Switch>
-              <Route exact={true} path="/" component={Main}/>
-              <Route path="/login" component={Login}/>
-               <Route path="/welcome" component={Welcome}/>
-              <Route component={NotFound}/>
+            <Route exact={true} path="/" component={Home}/>
+            <Route path="/login" component={Login}/>
+            <Route path="/welcome" component={Welcome}/>
+            <Route component={NotFound}/>
           </Switch>
+        <Footer/>
       </div>
     );
 

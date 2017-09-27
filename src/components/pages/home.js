@@ -1,6 +1,6 @@
 "use strict"
 import React from 'react';
-import {Col, Row, Well, FormGroup, Form, Button, ControlLabel, FormControl, Checkbox} from 'react-bootstrap';
+import {Col, Row, Well, FormGroup, Form, Button, ControlLabel, FormControl, Checkbox, Table} from 'react-bootstrap';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {getUsers} from '../../actions/userActions';
@@ -22,7 +22,8 @@ class Home extends React.Component {
 		
 		const usersList = this.props.users.map(function(usersArr){
 			return (
-				<div key={usersArr._id}>username: {usersArr.username}</div>
+
+				<tr  key={usersArr._id}><td>{usersArr._id}</td><td> {usersArr.username}</td></tr>
 			)
 		});
 		const loggedIn = (!this.props.isAuthenticated)?<UserUtilsShell />:"";
@@ -36,7 +37,17 @@ class Home extends React.Component {
 					<Row>
 						<Col xs={8} xsOffset={2} sm={6} smOffset={3} md={6} mdOffset={3} lg={6} lgOffset={3}>
 							<Well>
-								{usersList}
+								<Table striped bordered condensed hover>
+									<thead>
+										<tr>
+										<th>_id</th>
+										<th>username</th>
+										</tr>
+									</thead>
+									<tbody>
+										{usersList}
+									</tbody>
+								</Table>
 							</Well>
 						</Col>
 					</Row>
@@ -49,7 +60,7 @@ class Home extends React.Component {
 
 
 function mapStateToProps(state){
-	console.log("STATE FROM HOME = ", state)
+	//console.log("STATE FROM HOME = ", state)
 	return {
 		users:state.usersReducer.users,
 		isAuthenticated:state.authReducer.isAuthenticated

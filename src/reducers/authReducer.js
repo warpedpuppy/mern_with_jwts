@@ -2,13 +2,15 @@
 
 function authReducer(state = {
     isFetching: false,
-    isAuthenticated: false }, action) {
+    isAuthenticated: false,
+    currentMember: "" }, action) {
 	switch(action.type){
 
 		case "LOGIN_USER":
 			let obj = Object.assign({}, state, {
 	        isFetching: false,
 	        isAuthenticated: true,
+	        currentMember: action.currentMember,
 	        errorMessage: ''
 	      	})
 			return obj
@@ -16,12 +18,18 @@ function authReducer(state = {
 		case "LOGOUT_SUCCESS":
 	      return Object.assign({}, state, {
 	        isFetching: true,
-	        isAuthenticated: false
+	        isAuthenticated: false,
+	        currentMember: ""
 	      })
 
 	      case "REGISTER_USER":
-			var obj = {users:[...state.users, action.payload]}
-			return obj;
+	      	console.log("FROM authReducer = ", action)
+			return Object.assign({}, state, {
+	        isFetching: false,
+	        isAuthenticated: true,
+	        currentMember: action.payload.username,
+	        errorMessage: ''
+	      	})
 		break;
 
 

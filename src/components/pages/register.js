@@ -8,7 +8,6 @@ import {findDOMNode} from 'react-dom';
 
 class Register extends React.Component {
 
-	
 	register(){
 			const user={
 				username:findDOMNode(this.refs.username).value, 
@@ -16,9 +15,10 @@ class Register extends React.Component {
 			};
 			this.props.registerUsers(user);
 		}
+	
 
 	render(){
-
+		
 		
 		const formInstance = (
 		  <Form horizontal>
@@ -50,7 +50,7 @@ class Register extends React.Component {
 		    <FormGroup>
 		      <Col smOffset={2} sm={10}>
 		        <Button onClick={this.register.bind(this)}>
-		          Sign in
+		          Register
 		        </Button>
 		      </Col>
 		    </FormGroup>
