@@ -22,14 +22,13 @@ class Menu extends React.Component{
 		const buttonString = <Button bsStyle="danger" onClick={this.logout.bind(this)}>LOG OUT</Button>;
 
     	const button = (this.props.isAuthenticated)?buttonString:"";
-    	const welcomeString = (this.props.currentMember !== "")?<span>Welcome, {this.props.currentMember}</span>:"";
+    	const welcomeString = (this.props.currentMember !== "")?<span className="welcomeSpan">Welcome, {this.props.currentMember}</span>:"";
 
 		return(
 				<Navbar inverse >
 				    <Navbar.Header>
 				      <Navbar.Brand>
 				        <a href="/">user database</a>&nbsp; | &nbsp;
-						
 						
 
 				      </Navbar.Brand>

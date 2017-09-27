@@ -3,8 +3,15 @@
 function authReducer(state = {
     isFetching: false,
     isAuthenticated: false,
-    currentMember: "" }, action) {
+    currentMember: "",
+    message:"" }, action) {
 	switch(action.type){
+
+		case "TEST_JWT":
+			let obj3 = Object.assign({}, state, {
+	        message: action.payload.message
+	      	})
+			return obj3
 
 		case "LOGIN_USER":
 			let obj = Object.assign({}, state, {

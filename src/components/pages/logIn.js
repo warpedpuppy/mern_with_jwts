@@ -19,7 +19,7 @@ class Login extends React.Component {
 				username:findDOMNode(this.refs.username).value, 
 				password:findDOMNode(this.refs.password).value
 			};
-			console.log("USER + ", user)
+			console.log("USER = ", user)
 			this.props.loginUser(user);
 		}
 	render(){

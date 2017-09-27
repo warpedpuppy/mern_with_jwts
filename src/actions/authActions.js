@@ -3,6 +3,21 @@ import axios from 'axios';
 import {getUsers} from './userActions';
 
 
+export function testJWT(){
+
+	return function(dispatch){
+		axios.post("/api/testJWT/getMessage", {})
+		.then(function(response){
+			console.log("RESPONSE FROM TEST_JWT", response.data)
+			dispatch({type:"TEST_JWT", payload:response.data});
+		})
+		.catch(function(err){
+			dispatch({type:"TEST_JWT_REJECTED", payload:err})
+		})
+	};
+}
+
+
 export function registerUsers(user){
 	
 	return function(dispatch){
@@ -40,10 +55,10 @@ export function loginUser(user){
 
 			console.log("LOGIN USER ACTION = ", response.data);
 			console.log("LOGIN USER ACTION = ", user);
-			localStorage.setItem('id_token', response.data.token);
+			localStorage.setItem('id_token', response.data.id_token);
 			localStorage.setItem('username', user.username);
 
-			dispatch(receiveLogin(response.data.token, user.username))
+			dispatch(receiveLogin(response.data.id_token, user.username))
 
 			
 		})
@@ -80,7 +95,7 @@ export function logout(){
   }
 }
 export function checkForLocalStorage(){
-	console.log("check = ", localStorage.getItem('id_token') ? true : false)
+
 
 	return function(dispatch){
 		if(localStorage.getItem('id_token') ? true : false){

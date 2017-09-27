@@ -1,10 +1,11 @@
 var express = require('express');
 var path = require('path');
+
+var jsonwebtoken = require('jsonwebtoken');
 var jwt = require('express-jwt');
-var jwt2 = require('jsonwebtoken');
 var passport = require('passport');
 var _ = require('lodash');
-
+const config = require('./config/config');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
@@ -17,17 +18,21 @@ var User = require("./models/users.js")
 require('./config/passport');
 var app = express();
 
+//var app_router = module.exports = express.Router();
 //var User = mongoose.model('User');
 
-var auth = jwt({secret: 'SECRET', userProperty: 'payload'});
+//var auth = jwt({secret: 'SECRET', userProperty: 'payload'});
 
 // view engine setup
 app.set('view engine', 'jade');
- app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'views'));
 
 
 
 //THIS REPLACES THE TWO LINES ABOVE
+
+
+
 
 
 
@@ -73,13 +78,31 @@ app.get('/users', function(req, res){
   })
 })
 
-let config = require('./config/config');
+//var auth = jwt({secret: 'SECRET', userProperty: 'payload'});
+console.log("secret 1= ", config.secret)
+var jwtCheck= jwt({secret: config.secret}); 
+app.use("/testJWT", jwtCheck);
+
+app.post('/testJWT/getMessage', function(req, res, next){
+    res.json({message:"this is the test jwt message"});
+
+});
+
+
+
 function createToken(user) {
-  return jwt2.sign(_.omit(user, 'password'), config.secret, { expiresInMinutes: 60*5 });
+  console.log("secret = ", config.secret)
+  //return jsonwebtoken.sign({data:user.username,exp: Math.floor(Date.now() / 1000) + (60 * 60)}, config.secret);
+  let asdf = jsonwebtoken.sign(_.omit(user, 'password'), config.secret, { expiresIn: 60*5 });
+  console.log("ASDF = ", asdf)
+   return asdf;
 }
 
 app.post('/login', function(req, res, next){
-  console.log("LOGIN API CALL");
+  console.log("LOGIN API CALL", req.body);
+
+
+
   if(!req.body.username || !req.body.password){
     return res.status(400).json({message: 'Please fill out all fields'});
   }
@@ -87,13 +110,23 @@ app.post('/login', function(req, res, next){
   passport.authenticate('local', function(err, user, info){
     if(err){ return next(err); }
     if(user){
-      return res.json({token: user.generateJWT()});
+
+       return res.status(201).json({id_token: createToken(req.body)});
 
     } else {
       return res.status(401).json(info);
     }
   })(req, res, next);
 });
+
+
+
+
+
+
+
+
+
 
 
 

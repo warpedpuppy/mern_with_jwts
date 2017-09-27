@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www & node apiServer.js",
+    "start": "node ./bin/www ",
+    "server": "node apiServer.js",
     "webpack": "./node_modules/.bin/webpack",
     "nodemon": "node node_modules/.bin/nodemon"
   },
