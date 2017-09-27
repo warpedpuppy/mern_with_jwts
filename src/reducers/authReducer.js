@@ -2,8 +2,7 @@
 
 function authReducer(state = {
     isFetching: false,
-    isAuthenticated: localStorage.getItem('id_token') ? true : false
-  }, action) {
+    isAuthenticated: false }, action) {
 	switch(action.type){
 
 		case "LOGIN_USER":
@@ -13,7 +12,7 @@ function authReducer(state = {
 	        errorMessage: ''
 	      	})
 			return obj
-			
+
 		case "LOGOUT_SUCCESS":
 	      return Object.assign({}, state, {
 	        isFetching: true,
