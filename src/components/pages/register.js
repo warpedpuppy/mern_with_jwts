@@ -3,38 +3,27 @@ import React from 'react';
 import {Col, Row, Well, FormGroup, Form, Button, ControlLabel, FormControl, Checkbox} from 'react-bootstrap';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {getUsers} from '../../actions/userActions';
-import {loginUser} from '../../actions/authActions';
+import {registerUsers} from '../../actions/authActions';
 import {findDOMNode} from 'react-dom';
 
-class Login extends React.Component {
+class Register extends React.Component {
 
 	
-
-	componentDidMount(){
-		this.props.getUsers();
-	}
-	login(){
+	register(){
 			const user={
 				username:findDOMNode(this.refs.username).value, 
 				password:findDOMNode(this.refs.password).value
 			};
-			console.log("USER + ", user)
-			this.props.loginUser(user);
+			this.props.registerUsers(user);
 		}
+
 	render(){
 
-		const usersList = this.props.users.map(function(usersArr){
-			return (
-
-				<div key={usersArr._id}>{usersArr.username}</div>
 		
-			)
-		});
 		const formInstance = (
 		  <Form horizontal>
-		  <h1>Log in</h1>
-		    <FormGroup controlId="formHorizontalEmail">
+		  <h1>register</h1>
+		    <FormGroup controlId="formHorizontalEmail" >
 		      <Col componentClass={ControlLabel} sm={2}>
 		        User name:
 		      </Col>
@@ -43,7 +32,7 @@ class Login extends React.Component {
 		      </Col>
 		    </FormGroup>
 
-		    <FormGroup controlId="formHorizontalPassword">
+		    <FormGroup controlId="formHorizontalPassword" >
 		      <Col componentClass={ControlLabel} sm={2}>
 		        Password
 		      </Col>
@@ -60,7 +49,7 @@ class Login extends React.Component {
 
 		    <FormGroup>
 		      <Col smOffset={2} sm={10}>
-		        <Button onClick={this.login.bind(this)}>
+		        <Button onClick={this.register.bind(this)}>
 		          Sign in
 		        </Button>
 		      </Col>
@@ -69,23 +58,20 @@ class Login extends React.Component {
 		);
 		return(
 				<div>
-				{formInstance}
+						{formInstance}
+						
 				</div>
 			)
 
 
 	}
 }
-function mapStateToProps(state){
-	return {
-		users:state.usersReducer.users,
-	}
-}
+
 function mapDispatchToProps(dispatch){
 	return bindActionCreators({
-		getUsers:getUsers, loginUser:loginUser}, dispatch);
+		registerUsers:registerUsers}, dispatch);
 }
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(null, mapDispatchToProps)(Register);
 
 
 

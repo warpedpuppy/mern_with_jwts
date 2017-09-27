@@ -3,19 +3,24 @@
 import React from 'react';
 import {Nav, NavItem, Navbar, Badge, LinkContainer, Button} from 'react-bootstrap'
 import {connect} from 'react-redux';
+import {logout} from "../actions/authActions"
+import {bindActionCreators} from 'redux';
 
 class Menu extends React.Component{
 
 
-	componentDidMount(){
-		console.log("MENU", this.props.isAuthenticated)
+	// componentDidMount(){
+	// 	console.log("MENU", this.props.isAuthenticated)
 		
-	}
-
+	// }
+	logout(){
+			
+			this.props.logout();
+		}
 	render(){
 
 		const { isAuthenticated } = this.props
-		const buttonString = <Button bsStyle="danger">LOG OUT</Button>;
+		const buttonString = <Button bsStyle="danger" onClick={this.logout.bind(this)}>LOG OUT</Button>;
     	const button = (isAuthenticated)?buttonString:"";
 		return(
 				<Navbar inverse >
@@ -54,5 +59,8 @@ class Menu extends React.Component{
 
 }
 
-
-export default Menu;
+function mapDispatchToProps(dispatch){
+	return bindActionCreators({
+		logout:logout}, dispatch);
+}
+export default connect(null, mapDispatchToProps)(Menu);

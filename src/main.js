@@ -18,8 +18,7 @@ class Main extends React.Component {
 }
 
 function mapStateToProps(state) {
-  
-	console.log("MAIN STATE", state)
+
   
   return {
     isAuthenticated:state.authReducer.isAuthenticated
