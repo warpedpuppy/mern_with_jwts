@@ -10981,8 +10981,13 @@ exports.default = function (store) {
       console.log("endpoint = ", endpoint);
       console.log("authenticated = ", authenticated);
       // Passing the authenticated boolean back in our data will let us distinguish between normal and secret quotes
-      return callApi(endpoint, authenticated).then(function (response) {
+      return callApi(endpoint, authenticated).then(function (response, dispatch) {
         console.log("HERE IS WHERE THE REDUCER SHOULD BE HIT", response);
+        dispatch({
+          response: response,
+          authenticated: authenticated,
+          type: successType
+        });
         next({
           response: response,
           authenticated: authenticated,
@@ -24486,17 +24491,13 @@ var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
 var _reactRouterDom = __webpack_require__(228);
 
-var _api = __webpack_require__(121);
-
-var _api2 = _interopRequireDefault(_api);
-
 var _routes = __webpack_require__(464);
 
 var _routes2 = _interopRequireDefault(_routes);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var middleware = (0, _redux.applyMiddleware)(_reduxThunk2.default, _reduxLogger2.default, _api2.default);
+var middleware = (0, _redux.applyMiddleware)(_reduxThunk2.default, _reduxLogger2.default);
 var initialState = window.INITIAL_STATE;
 var store = (0, _redux.createStore)(_index2.default, initialState, middleware);
 
@@ -54410,7 +54411,13 @@ exports.QUOTE_FAILURE = exports.QUOTE_SUCCESS = exports.QUOTE_REQUEST = undefine
 exports.fetchQuote = fetchQuote;
 exports.fetchSecretQuote = fetchSecretQuote;
 
+var _axios = __webpack_require__(206);
+
+var _axios2 = _interopRequireDefault(_axios);
+
 var _api = __webpack_require__(121);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 // The middleware to call the API for quotes
@@ -54429,15 +54436,24 @@ function fetchQuote() {
   });
 }
 
-// Same API middlware is used to get a 
-// secret quote, but we set authenticated
-// to true so that the auth header is sent
 function fetchSecretQuote() {
-  return _defineProperty({}, _api.CALL_API, {
-    endpoint: "api/testJWT/getMessage",
-    authenticated: true,
-    types: [QUOTE_REQUEST, QUOTE_SUCCESS, QUOTE_FAILURE]
-  });
+
+  var token = localStorage.getItem('id_token') || null;
+
+  var config = {
+    headers: {
+      'Authorization': 'Bearer ' + token
+    }
+  };
+
+  return function (dispatch) {
+    _axios2.default.post("/api/testJWT/getMessage", {}, config).then(function (response) {
+      console.log("RESPONSE FROM TEST_JWT", response.data);
+      dispatch({ type: "TEST_JWT", payload: response.data });
+    }).catch(function (err) {
+      dispatch({ type: "TEST_JWT_REJECTED", payload: err });
+    });
+  };
 }
 
 /***/ }),

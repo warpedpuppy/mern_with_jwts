@@ -1,4 +1,5 @@
-
+"use strict"
+import axios from 'axios';
 // The middleware to call the API for quotes
 import { CALL_API } from '../../middleware/api'
 
@@ -17,15 +18,29 @@ export function fetchQuote() {
   }
 }
 
-// Same API middlware is used to get a 
-// secret quote, but we set authenticated
-// to true so that the auth header is sent
+
 export function fetchSecretQuote() {
-  return {
-    [CALL_API]: {
-      endpoint:"api/testJWT/getMessage",
-      authenticated: true,
-      types: [QUOTE_REQUEST, QUOTE_SUCCESS, QUOTE_FAILURE]
+
+   let token = localStorage.getItem('id_token') || null
+ 
+
+
+   let config = {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
     }
-  }
+  
+
+  return function(dispatch){
+   axios.post("/api/testJWT/getMessage", {}, config)
+   .then(function(response){
+     console.log("RESPONSE FROM TEST_JWT", response.data)
+     dispatch({type:"TEST_JWT", payload:response.data});
+   })
+   .catch(function(err){
+     dispatch({type:"TEST_JWT_REJECTED", payload:err})
+   })
+  };
 }
+
