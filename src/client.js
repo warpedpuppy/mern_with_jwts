@@ -9,8 +9,8 @@ import {Provider} from 'react-redux';
 import {Router, Route, IndexRoute, browserHistory, hashHistory} from 'react-router'
 import thunk from 'redux-thunk';
 import {BrowserRouter, HashRouter} from 'react-router-dom';
-
-const middleware = applyMiddleware(thunk,logger);
+import api from '../middleware/api'
+const middleware = applyMiddleware(thunk,logger, api);
 const initialState = window.INITIAL_STATE;
 const store = createStore(reducers,initialState, middleware);
 

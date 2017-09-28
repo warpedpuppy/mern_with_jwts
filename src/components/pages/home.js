@@ -4,7 +4,7 @@ import {Col, Row, Well, FormGroup, Form, Button, ControlLabel, FormControl, Chec
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {getUsers} from '../../actions/userActions';
-import {testJWT} from '../../actions/authActions'
+import { fetchSecretQuote } from '../../actions/quoteActions'
 import UserUtilsShell from "./userUtilsShell";
 
 class Home extends React.Component {
@@ -17,12 +17,12 @@ class Home extends React.Component {
 		this.props.getUsers();
 	}
 
-	testJWT(){
-		this.props.testJWT();
-	}
+	// testJWT(){
+	// 	this.props.testJWT();
+	// }
 
 	render(){
-
+		const { dispatch, fetchSecretQuote } = this.props;
 		
 		const usersList = this.props.users.map(function(usersArr){
 			return (
@@ -59,7 +59,7 @@ class Home extends React.Component {
 					<Row>
 						<Col xs={8} xsOffset={2} sm={6} smOffset={3} md={6} mdOffset={3} lg={6} lgOffset={3}>
 							
-								<Button onClick={this.testJWT.bind(this)} bsStyle="warning" className="centerButton">Click here to see if jwt protecting server call</Button>
+								<Button onClick={() => fetchSecretQuote()} bsStyle="warning" className="centerButton">Click here to see if jwt protecting server call</Button>
 								<Well>
 								{this.props.authMessage}
 								</Well>
@@ -83,7 +83,7 @@ function mapStateToProps(state){
 }
 function mapDispatchToProps(dispatch){
 	return bindActionCreators({
-		getUsers:getUsers,testJWT:testJWT }, dispatch);
+		getUsers:getUsers,fetchSecretQuote:fetchSecretQuote}, dispatch);
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
 

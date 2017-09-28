@@ -39,7 +39,7 @@ class Login extends React.Component {
 		        User name:
 		      </Col>
 		      <Col sm={10}>
-		        <FormControl type="text" placeholder="username" ref="username"/>
+		        <FormControl type="text" placeholder="username" ref="username" value="test1"/>
 		      </Col>
 		    </FormGroup>
 
@@ -48,7 +48,7 @@ class Login extends React.Component {
 		        Password
 		      </Col>
 		      <Col sm={10}>
-		        <FormControl type="password" placeholder="Password" ref="password"/>
+		        <FormControl type="password" placeholder="Password" ref="password" value="test1"/>
 		      </Col>
 		    </FormGroup>
 

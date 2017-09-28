@@ -13,10 +13,10 @@ import reducers from './src/reducers/index';
 import routes from './src/routes';
 
 function handleRender(req, res){
-  console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+  //console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
   axios.get('http://localhost:3001/users')
     .then(function(response){
-      console.log("THIS IS THE REQUEST HANDLER")
+      //console.log("THIS IS THE REQUEST HANDLER")
         //  var myHtml = JSON.stringify(response.data);
         //  console.log(myHtml)
         // res.render('index', {myHtml});

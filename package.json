@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www ",
+    "start": "node ./bin/www",
     "server": "node apiServer.js",
     "webpack": "./node_modules/.bin/webpack",
     "nodemon": "node node_modules/.bin/nodemon"
@@ -34,25 +34,33 @@
     "mongoose": "^4.11.12",
     "morgan": "~1.6.1",
     "nodemon": "^1.12.1",
-    "react": "^15.6.1",
+  
     "react-bootstrap": "^0.31.3",
-    "react-dom": "^15.6.1",
-    "react-redux": "^5.0.6",
+   
+   
     "react-router": "^3.0.2",
     "react-router-dom": "^4.2.2",
-    "redux": "^3.7.2",
+    
     "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.2.0",
+   
     "serve-favicon": "~2.3.0",
     "webpack": "^3.6.0"
   },
   "dependencies": {
+     "react": "^0.14.3",
+    "react-dom": "^0.14.3",
+    "react-redux": "^4.0.4",
+    "redux": "^3.0.5",
+    "redux-thunk": "^0.1.0",
     "body-parser": "~1.13.2",
     "cookie-parser": "~1.3.5",
+    "cors": "^2.8.4",
     "debug": "~2.2.0",
+    "dotenv": "^4.0.0",
     "ejs": "~2.3.3",
     "express": "~4.13.1",
     "express-jwt": "^5.3.0",
+    "http": "0.0.0",
     "jsonwebtoken": "^8.0.1",
     "lodash": "^4.17.4",
     "morgan": "~1.6.1",

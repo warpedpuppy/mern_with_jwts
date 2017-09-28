@@ -2,20 +2,25 @@
 import axios from 'axios';
 import {getUsers} from './userActions';
 
+import { CALL_API } from '../../middleware/api';
+export const TEST_JWT = 'TEST_JWT';
 
-export function testJWT(){
+export function testJWT_temp(){
 
-	return function(dispatch){
-		axios.post("/api/testJWT/getMessage", {})
-		.then(function(response){
-			console.log("RESPONSE FROM TEST_JWT", response.data)
-			dispatch({type:"TEST_JWT", payload:response.data});
-		})
-		.catch(function(err){
-			dispatch({type:"TEST_JWT_REJECTED", payload:err})
-		})
-	};
+	// return function(dispatch){
+	// 	axios.post("/api/testJWT/getMessage", {})
+	// 	.then(function(response){
+	// 		console.log("RESPONSE FROM TEST_JWT", response.data)
+	// 		dispatch({type:"TEST_JWT", payload:response.data});
+	// 	})
+	// 	.catch(function(err){
+	// 		dispatch({type:"TEST_JWT_REJECTED", payload:err})
+	// 	})
+	// };
 }
+
+
+
 
 
 export function registerUsers(user){

@@ -1,4 +1,7 @@
 "use strict"
+import { 
+  QUOTE_REQUEST, QUOTE_SUCCESS, QUOTE_FAILURE
+} from '../actions/authActions'
 
 function authReducer(state = {
     isFetching: false,
