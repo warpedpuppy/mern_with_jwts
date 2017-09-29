@@ -5,7 +5,8 @@ var express = require('express'),
     passport = require('passport'),
     app = module.exports = express.Router(),
     User = require("./models/users.js");
-
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 require('./config/passport');
 
 function createToken(user) {
@@ -46,13 +47,32 @@ app.post('/login', function(req, res, next){
     if(err){ return next(err); }
     if(user){
 
-       return res.status(201).json({id_token: createToken(req.body)});
+      let currentUser = {};
+      currentUser.id_token = createToken(req.body);
+      currentUser.username = req.body.username;
+      req.session.currentUser = currentUser;
+      req.session.save(function(err){
+        if(err){
+          console.log('# API POST currentUser SESSION: ', err);
+        }
+        //res.json(req.session.currentUser);
+        return res.status(201).json(req.session.currentUser);
+      })
+
+       //return res.status(201).json({id_token: currentUser.id_token});
 
     } else {
       return res.status(401).json(info);
     }
   })(req, res, next);
 });
+
+app.get('/retrieveToken', function(req, res, next){
+  console.log("req body", req.body)
+  console.log(req.session.currentUser);
+  onsole.log("req body", req.body)
+  return res.status(201).json(req.session.currentUser);
+})
 
 
 app.post('/register', function(req, res, next){

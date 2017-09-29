@@ -50,7 +50,7 @@ app.use(session({
   saveUnitialized: false,
   resave: false,
   cookie: {maxAge: 1000*60*60*24*2},
-  store: new MongoStore({mongooseConnection: db, ttl:2*24*60*60})
+  store: new MongoStore({mongooseConnection: db, ttl:5*60})
 }))
 
 app.use(require('./protected-routes'));
