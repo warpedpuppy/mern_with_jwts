@@ -1,11 +1,8 @@
 "use strict"
 import axios from 'axios';
 // The middleware to call the API for quotes
-import { CALL_API } from '../../middleware/api'
 
-export const QUOTE_REQUEST = 'QUOTE_REQUEST'
-export const QUOTE_SUCCESS = 'QUOTE_SUCCESS'
-export const QUOTE_FAILURE = 'QUOTE_FAILURE'
+
 
 // Uses the API middlware to get a quote
 export function fetchQuote() {
