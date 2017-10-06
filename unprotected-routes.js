@@ -70,7 +70,7 @@ app.post('/login', function(req, res, next){
 app.get('/retrieveToken', function(req, res, next){
   console.log("req body", req.body)
   console.log(req.session.currentUser);
-  onsole.log("req body", req.body)
+  console.log("req body", req.body)
   return res.status(201).json(req.session.currentUser);
 })
 

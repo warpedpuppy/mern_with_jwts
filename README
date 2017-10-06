@@ -1,0 +1,12 @@
+
+(currently a work in progress)
+
+This is going to be a mern stack template with jwts used to grant permission to pages.
+
+to run:
+
+1) npm run webpack
+2) (open new terminal window)
+3) npm run server
+4) (open new terminal window)
+5) npm start

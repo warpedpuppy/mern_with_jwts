@@ -28,7 +28,7 @@ class Menu extends React.Component{
 				<Navbar inverse >
 				    <Navbar.Header>
 				      <Navbar.Brand>
-				        <a href="/">user database</a>&nbsp; | &nbsp;
+				        <a href="/">mern stack</a>&nbsp; | &nbsp;
 						
 
 				      </Navbar.Brand>
@@ -36,10 +36,8 @@ class Menu extends React.Component{
 				    </Navbar.Header>
 				    <Navbar.Collapse>
 				      <Nav>
-				     
-				        <NavItem eventKey={1} href="/#/login">log in</NavItem>
-				
-				        <NavItem eventKey={2} href="/#/welcome">welcome</NavItem>
+				    
+				        <NavItem eventKey={2} href="/#/users">users</NavItem>
 				       
 				      </Nav>
 				      <Nav pullRight>

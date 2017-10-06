@@ -9,7 +9,7 @@ var jwtCheck = jwt({
   secret: config.secret
  });
 
-//app.use("/testJWT", jwtCheck);
+app.use("/testJWT", jwtCheck);
 
 
 app.post('/testJWT/getMessage', function(req, res, next){

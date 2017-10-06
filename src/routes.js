@@ -8,8 +8,7 @@ import {Route, Switch} from 'react-router-dom';
 import Menu from './components/menu';
 import Footer from './components/footer';
 import Home from './components/pages/home';
-import Login from './components/pages/login';
-import Welcome from './components/pages/welcome';
+import Users from './components/pages/users';
 // END REACT- ROUTER
 
 //import Main from './main';
@@ -41,8 +40,7 @@ const routes = (
       <Menu />
           <Switch>
             <Route exact={true} path="/" component={Home}/>
-            <Route path="/login" component={Login}/>
-            <Route path="/welcome" component={Welcome}/>
+            <Route path="/users" component={Users}/>
             <Route component={NotFound}/>
           </Switch>
         <Footer/>
