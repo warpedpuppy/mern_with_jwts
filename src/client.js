@@ -8,26 +8,26 @@ import logger from 'redux-logger';
 import {Provider} from 'react-redux';
 import {Router, Route, IndexRoute, browserHistory, hashHistory} from 'react-router'
 import thunk from 'redux-thunk';
-
+import {BrowserRouter, HashRouter} from 'react-router-dom';
 
 const middleware = applyMiddleware(thunk,logger);
-const store = createStore(reducers, middleware);
+const initialState = window.INITIAL_STATE;
+const store = createStore(reducers,initialState, middleware);
 
-import Main from "./main.js";
-import Home from "./components/pages/home.js";
-import Login from "./components/pages/login.js";
-import Welcome from "./components/pages/welcome.js";
+//import Main from "./main.js";
+// import Home from "./components/pages/home.js";
+// import Login from "./components/pages/login.js";
+// import Welcome from "./components/pages/welcome.js";
+
+import routes from './routes'
 
 const Routes = (
-	<Provider store={store}>
-		<Router history={hashHistory}>
-			<Route path="/" component={Main}>
-				<IndexRoute component={Home}/>
-				<Route path="/login" component={Login} />
-				<Route path="/welcome" component={Welcome} />
-			</Route>
-		</Router>
-	</Provider>
+  <Provider store={store}>
+    <HashRouter>
+      {routes}
+    </HashRouter>
+  </Provider>
 )
+
 
 render(Routes, document.getElementById("app"));

@@ -3,13 +3,12 @@
 import React from 'react';
 import {render} from 'react-dom';
 // REACT-ROUTER
-//import {Router, Route, IndexRoute, browserHistory} from 'react-router';
-import { Route, Switch} from 'react-router-dom';
+import {Router, IndexRoute, browserHistory, hashHistory} from 'react-router';
+import {Route, Switch} from 'react-router-dom';
 import Menu from './components/menu';
 import Footer from './components/footer';
 import Home from './components/pages/home';
-import Login from './components/pages/login';
-import Welcome from './components/pages/welcome';
+import Users from './components/pages/users';
 // END REACT- ROUTER
 
 //import Main from './main';
@@ -38,15 +37,13 @@ const NotFound = function(){
 // CLIENT-SERVER SHARED ROUTES
 const routes = (
       <div>
-          <Menu />
+      <Menu />
           <Switch>
-              <Route exact={true} path="/" component={Home}/>
-              <Route path="/login" component={Login}/>
-               <Route path="/welcome" component={Welcome}/>
-              <Route component={NotFound}/>
-
+            <Route exact={true} path="/" component={Home}/>
+            <Route path="/users" component={Users}/>
+            <Route component={NotFound}/>
           </Switch>
-          <Footer />
+        <Footer/>
       </div>
     );
 

@@ -1,8 +1,15 @@
 body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
-
-
+.welcomeSpan {
+	display: inline-block;
+	margin:10px 20px;
+	padding:5px;
+}
+.centerButton {
+	display: block;
+	margin:20px auto;
+}
 form {
 	border:2px solid #333333;
 	display: block;

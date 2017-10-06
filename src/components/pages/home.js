@@ -1,10 +1,12 @@
 "use strict"
 import React from 'react';
-import {Col, Row, Well, FormGroup, Form, Button, ControlLabel, FormControl, Checkbox} from 'react-bootstrap';
+import {Col, Row, Well, FormGroup, Form, Button, ControlLabel, FormControl, Checkbox, Table} from 'react-bootstrap';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {getUsers} from '../../actions/userActions';
+import { fetchSecretQuote } from '../../actions/quoteActions'
 import UserUtilsShell from "./userUtilsShell";
+import WelcomeMessage from "./WelcomeMessage";
 
 class Home extends React.Component {
 
@@ -15,17 +17,18 @@ class Home extends React.Component {
 	componentDidMount(){
 		this.props.getUsers();
 	}
-	
 
 	render(){
-
+		const { dispatch, fetchSecretQuote } = this.props;
 		
 		const usersList = this.props.users.map(function(usersArr){
 			return (
-				<div key={usersArr._id}>username: {usersArr.username}</div>
+
+				<tr  key={usersArr._id}><td>{usersArr._id}</td><td> {usersArr.username}</td></tr>
 			)
 		});
-		const loggedIn = (!this.props.isAuthenticated)?<UserUtilsShell />:"";
+		const loggedIn = (!this.props.isAuthenticated)?<UserUtilsShell />:<WelcomeMessage currentMember={this.props.currentMember} />;
+
 
 		
 		return(
@@ -33,11 +36,14 @@ class Home extends React.Component {
 					
 					{loggedIn}
 						
+					
 					<Row>
 						<Col xs={8} xsOffset={2} sm={6} smOffset={3} md={6} mdOffset={3} lg={6} lgOffset={3}>
-							<Well>
-								{usersList}
-							</Well>
+				
+								<Button onClick={() => fetchSecretQuote()} bsStyle="warning" className="centerButton">Click here to see if jwt protecting server call</Button>
+								<Well>
+								{this.props.authMessage}
+								</Well>
 						</Col>
 					</Row>
 				</div>
@@ -49,15 +55,17 @@ class Home extends React.Component {
 
 
 function mapStateToProps(state){
-	console.log("STATE FROM HOME = ", state)
+	//console.log("STATE FROM HOME = ", state)
 	return {
 		users:state.usersReducer.users,
-		isAuthenticated:state.authReducer.isAuthenticated
+		isAuthenticated:state.authReducer.isAuthenticated,
+		authMessage:state.authReducer.message,
+		currentMember:state.authReducer.currentMember
 	}
 }
 function mapDispatchToProps(dispatch){
 	return bindActionCreators({
-		getUsers:getUsers }, dispatch);
+		getUsers:getUsers,fetchSecretQuote:fetchSecretQuote}, dispatch);
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
 

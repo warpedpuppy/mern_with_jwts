@@ -19,7 +19,7 @@ class Login extends React.Component {
 				username:findDOMNode(this.refs.username).value, 
 				password:findDOMNode(this.refs.password).value
 			};
-			console.log("USER + ", user)
+			console.log("USER = ", user)
 			this.props.loginUser(user);
 		}
 	render(){
@@ -39,7 +39,7 @@ class Login extends React.Component {
 		        User name:
 		      </Col>
 		      <Col sm={10}>
-		        <FormControl type="text" placeholder="username" ref="username"/>
+		        <FormControl type="text" placeholder="username" ref="username" />
 		      </Col>
 		    </FormGroup>
 
@@ -48,16 +48,9 @@ class Login extends React.Component {
 		        Password
 		      </Col>
 		      <Col sm={10}>
-		        <FormControl type="password" placeholder="Password" ref="password"/>
+		        <FormControl type="password" placeholder="Password" ref="password" />
 		      </Col>
 		    </FormGroup>
-
-		    <FormGroup>
-		      <Col smOffset={2} sm={10}>
-		        <Checkbox>Remember me</Checkbox>
-		      </Col>
-		    </FormGroup>
-
 		    <FormGroup>
 		      <Col smOffset={2} sm={10}>
 		        <Button onClick={this.login.bind(this)}>
