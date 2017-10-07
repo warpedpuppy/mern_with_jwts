@@ -84,14 +84,73 @@ export function logout(){
   }
 }
 export function checkForLocalStorage(){
+	console.log("CHECK FOR LOCAL STORAGE")
 
 
-	return function(dispatch){
-		if(localStorage.getItem('id_token') ? true : false){
-			dispatch(receiveLogin(localStorage.getItem('id_token'), localStorage.getItem('username')))
-		}
-	}
+	 let id_token = localStorage.getItem('id_token')|| null;
+if(id_token !== null){
+      let config = { headers: {'Authorization': `Bearer ${id_token}`  } }
+
+      return function(dispatch){
+       axios.post("/api/testJWT/isStillGood", {}, config)
+       .then(function(response){
+
+       	console.log(localStorage.getItem('username'));
+         console.log("RESPONSE FROM TEST_JWT", response.data)
+         dispatch(receiveLogin(localStorage.getItem('id_token'), localStorage.getItem('username')))
+ 
+       })
+       .catch(function(err){
+       	  localStorage.removeItem('id_token');
+	                   localStorage.removeItem('username')
+        console.log("RESPONSE FROM TEST_JWT_REJECTED", err)
+         dispatch({type:"TEST_JWT_REJECTED", payload:err})
+       })
+      };
+  }
+
+
+
+	// return function(dispatch){
+	//     let id_token = localStorage.getItem('id_token')|| null;
+	//     console.log(id_token)
+	//     if(id_token !== null){
+	//     	console.log("here")
+	//         let config = { headers: {'Authorization': `Bearer ${id_token}`  } }
+	//         console.log(config)
+	//         return function(dispatch){
+	//         	console.log("dispatch")
+	//              axios.post("/api/testJWT/isStillGood", {}, config)
+	//              .then(function(response){
+	//                   console.log("RESPONSE FROM TEST_JWT", response.data)
+	//                   dispatch(receiveLogin(localStorage.getItem('id_token'), localStorage.getItem('username')))
+
+	//              })
+	//              .catch(function(err){
+	//                   console.log("RESPONSE FROM TEST_JWT_REJECTED", err)
+	//                   localStorage.removeItem('id_token');
+	//                   localStorage.removeItem('username')
+	//                   dispatch(receiveLogout())
+	//             })
+	//         };
+	//     }
+	// }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

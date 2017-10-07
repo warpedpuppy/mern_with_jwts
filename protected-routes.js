@@ -18,3 +18,9 @@ app.post('/testJWT/getMessage', function(req, res, next){
     res.status(200).json({message:"this is the test jwt message"});
 
 });
+
+app.post('/testJWT/isStillGood', function(req, res, next){
+    console.log("post call from protected routes ", req.session)
+    res.status(200).json({message:"still good, bby"});
+
+});

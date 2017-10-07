@@ -13,7 +13,6 @@ class Menu extends React.Component{
 		this.props.checkForLocalStorage();
 	}
 	logout(){
-			
 			this.props.logout();
 		}
 	render(){
@@ -36,9 +35,7 @@ class Menu extends React.Component{
 				    </Navbar.Header>
 				    <Navbar.Collapse>
 				      <Nav>
-				    
 				        <NavItem eventKey={2} href="/#/users">users</NavItem>
-				       
 				      </Nav>
 				      <Nav pullRight>
 				      
@@ -61,7 +58,9 @@ function mapStateToProps(state){
 }
 function mapDispatchToProps(dispatch){
 	return bindActionCreators({
-		logout:logout, checkForLocalStorage:checkForLocalStorage}, dispatch);
+		logout:logout, 
+		checkForLocalStorage:checkForLocalStorage
+	}, dispatch);
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Menu);
 
