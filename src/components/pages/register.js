@@ -15,11 +15,7 @@ class Register extends React.Component {
 			};
 			this.props.registerUsers(user);
 		}
-	
-
 	render(){
-		
-		
 		const formInstance = (
 		  <Form horizontal>
 		  <h1>register</h1>
@@ -51,10 +47,9 @@ class Register extends React.Component {
 		  </Form>
 		);
 		return(
-				<div>
-						{formInstance}
-						
-				</div>
+			<div>
+				{formInstance}
+			</div>
 			)
 
 

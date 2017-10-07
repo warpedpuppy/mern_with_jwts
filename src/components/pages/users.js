@@ -4,8 +4,6 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Col, Row, Well, FormGroup, Form, Button, ControlLabel, FormControl, Checkbox, Table, Badge} from 'react-bootstrap';
 
-
-
 class Users extends React.Component {
 
 	constructor(){

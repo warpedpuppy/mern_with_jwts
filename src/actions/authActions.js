@@ -1,30 +1,24 @@
 "use strict"
 import axios from 'axios';
 import {getUsers} from './userActions';
-
-
-
-
-
+import {fetchSecretQuote} from './quoteActions';
 
 export function registerUsers(user){
-	
-	return function(dispatch){
-		axios.post("/api/register", user)
-		.then(function(response){
-			
-			localStorage.setItem('id_token', response.data.token);
-			localStorage.setItem('username', response.data.username);
-			dispatch({type:"REGISTER_USER", payload:response.data});
-			dispatch(getUsers());
-		})
-		.catch(function(err){
-			dispatch({type:"REGISTER_USER_REJECTED", payload:"there was an error posting"})
-		})
-	}
+    
+    return function(dispatch){
+        axios.post("/api/register", user)
+        .then(function(response){
+            
+            localStorage.setItem('id_token', response.data.token);
+            localStorage.setItem('username', response.data.username);
+            dispatch({type:"REGISTER_USER", payload:response.data});
+            dispatch(getUsers());
+        })
+        .catch(function(err){
+            dispatch({type:"REGISTER_USER_REJECTED", payload:"there was an error posting"})
+        })
+    }
 }
-
-
 
 function receiveLogin(token, username) {
   return {
@@ -38,25 +32,20 @@ function receiveLogin(token, username) {
 
 export function loginUser(user){
 
-	return function(dispatch){
-		axios.post("/api/login", user)
-		.then(function(response){
+    return function(dispatch){
+        axios.post("/api/login", user)
+        .then(function(response){
+            localStorage.setItem('id_token', response.data.id_token);
+            localStorage.setItem('username', user.username);
+            dispatch(receiveLogin(response.data.id_token, user.username))
 
-			console.log("LOGIN USER ACTION = ", response.data);
-			console.log("LOGIN USER ACTION = ", user);
-			localStorage.setItem('id_token', response.data.id_token);
-			localStorage.setItem('username', user.username);
-
-			dispatch(receiveLogin(response.data.id_token, user.username))
-
-			
-		})
-		.catch(function(err){
-			dispatch({type:"LOGIN_USER_REJECTED", payload:"there was an error posting"})
-		})
-	}
+  
+        })
+        .catch(function(err){
+            dispatch({type:"LOGIN_USER_REJECTED", payload:"there was an error posting"})
+        })
+    }
 }
-
 
 
 function requestLogout() {
@@ -76,65 +65,46 @@ function receiveLogout() {
 }
 
 export function logout(){
-	return dispatch => {
+    return dispatch => {
     dispatch(requestLogout())
     localStorage.removeItem('id_token');
     localStorage.removeItem('username')
     dispatch(receiveLogout())
+     dispatch(fetchSecretQuote());
   }
 }
 export function checkForLocalStorage(){
-	console.log("CHECK FOR LOCAL STORAGE")
+    
+     let id_token = localStorage.getItem('id_token')|| null;
 
-
-	 let id_token = localStorage.getItem('id_token')|| null;
-if(id_token !== null){
-      let config = { headers: {'Authorization': `Bearer ${id_token}`  } }
-
-      return function(dispatch){
-       axios.post("/api/testJWT/isStillGood", {}, config)
-       .then(function(response){
-
-       	console.log(localStorage.getItem('username'));
-         console.log("RESPONSE FROM TEST_JWT", response.data)
-         dispatch(receiveLogin(localStorage.getItem('id_token'), localStorage.getItem('username')))
+    if(id_token !== null){
+          let config = { headers: {'Authorization': `Bearer ${id_token}`  } }
  
-       })
-       .catch(function(err){
-       	  localStorage.removeItem('id_token');
-	                   localStorage.removeItem('username')
-        console.log("RESPONSE FROM TEST_JWT_REJECTED", err)
-         dispatch({type:"TEST_JWT_REJECTED", payload:err})
-       })
-      };
-  }
+          return function(dispatch){
+           axios.post("/api/testJWT/isStillGood", {}, config)
+           .then(function(response){
+
+            console.log(localStorage.getItem('username'));
+             console.log("RESPONSE FROM TEST_JWT", response.data)
+             dispatch(receiveLogin(localStorage.getItem('id_token'), localStorage.getItem('username')))
+     
+           })
+           .catch(function(err){
+              localStorage.removeItem('id_token');
+                           localStorage.removeItem('username')
+            console.log("RESPONSE FROM TEST_JWT_REJECTED", err)
+             dispatch({type:"TEST_JWT_REJECTED", payload:err})
+           })
+          };
+      } else {
+        return function(dispatch){
+            localStorage.removeItem('id_token');
+            localStorage.removeItem('username')
+            dispatch(receiveLogout())
+         };
+      }
 
 
-
-	// return function(dispatch){
-	//     let id_token = localStorage.getItem('id_token')|| null;
-	//     console.log(id_token)
-	//     if(id_token !== null){
-	//     	console.log("here")
-	//         let config = { headers: {'Authorization': `Bearer ${id_token}`  } }
-	//         console.log(config)
-	//         return function(dispatch){
-	//         	console.log("dispatch")
-	//              axios.post("/api/testJWT/isStillGood", {}, config)
-	//              .then(function(response){
-	//                   console.log("RESPONSE FROM TEST_JWT", response.data)
-	//                   dispatch(receiveLogin(localStorage.getItem('id_token'), localStorage.getItem('username')))
-
-	//              })
-	//              .catch(function(err){
-	//                   console.log("RESPONSE FROM TEST_JWT_REJECTED", err)
-	//                   localStorage.removeItem('id_token');
-	//                   localStorage.removeItem('username')
-	//                   dispatch(receiveLogout())
-	//             })
-	//         };
-	//     }
-	// }
 
 }
 

@@ -1,20 +1,7 @@
 "use strict"
 import axios from 'axios';
 
-export function fetchQuote() {
-  return {
-    [CALL_API]: {
-      type:"test",
-      endpoint: 'random-quote',
-      types: [QUOTE_REQUEST, QUOTE_SUCCESS, QUOTE_FAILURE]
-    }
-  }
-}
-
-
 export function fetchSecretQuote() {
-
-
 
       let id_token = localStorage.getItem('id_token')|| null;
 
@@ -26,15 +13,10 @@ export function fetchSecretQuote() {
          console.log("RESPONSE FROM TEST_JWT", response.data)
          dispatch({type:"TEST_JWT", payload:response.data});
        })
-       .catch(function(err){
-        console.log("RESPONSE FROM TEST_JWT_REJECTED", err)
-         dispatch({type:"TEST_JWT_REJECTED", payload:err})
+       .catch(function(response, err){
+        console.log("RESPONSE FROM TEST_JWT_REJECTED", response)
+         dispatch({type:"TEST_JWT_REJECTED", payload:response.data})
        })
       };
-
-
-
-      
-   
 }
 

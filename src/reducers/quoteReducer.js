@@ -1,38 +1,48 @@
 // The quotes reducer
-import { 
-  QUOTE_REQUEST, QUOTE_SUCCESS, QUOTE_FAILURE
-} from '../actions/authActions'
+// import { 
+//   QUOTE_REQUEST, QUOTE_SUCCESS, QUOTE_FAILURE
+// } from '../actions/authActions'
 
 function quoteReducer(state = {
     isFetching: false,
     quote: '',
-    authenticated: false
+    authenticated: false,
+    message:""
   }, action) {
   switch (action.type) {
 
-
-    case QUOTE_REQUEST:
-      let obj3 = Object.assign({}, state, {
-          quote: action.payload.message
+    case "TEST_JWT":
+      let obj = Object.assign({}, state, {
+          message: action.payload.message
           })
-      return obj3
+      return obj
 
-
-    case QUOTE_SUCCESS:
-      let obj4 = Object.assign({}, state, {
-          quote: action.payload.message
+    case "TEST_JWT_REJECTED":
+        obj = Object.assign({}, state, {
+          message: "You need to be logged in to see this!"
           })
-       console.log("obj4 = ", obj4);
-       console.log("action = ", action);
-      return obj4
+      return obj
+
+    // case QUOTE_REQUEST:
+    //     obj3 = Object.assign({}, state, {
+    //       quote: action.payload.message
+    //       })
+    //   return obj3
+
+
+    // case QUOTE_SUCCESS:
+    //   let obj4 = Object.assign({}, state, {
+    //       quote: action.payload.message
+    //       })
+    //   return obj4
 
 
 
-    case QUOTE_FAILURE:
-      let obj5 = Object.assign({}, state, {
-          quote: action.payload.message
-          })
-      return obj5
+    // case QUOTE_FAILURE:
+    //   let obj5 = Object.assign({}, state, {
+    //       quote: action.payload.message
+    //       })
+    //   return obj5
 
 
     default:
